@@ -1,0 +1,22 @@
+<% include ./partials/header %>
+<% include ./partials/navbar %>
+
+    <div class="container">
+        <h2>Photo Gallery</h2>
+        <div class="header"></div>
+        <div class="grid">
+            <% photos.forEach(function(photo){ %>
+                <div class="grid-item">
+                    <a href="/photos/<%= photo._id %>"><img width="300" src="img/<%= photo.image %>" alt="<%= photo.title %>"></a>
+                </div>
+            <% }); %>  
+        </div>
+      <a href="/photos/new"><p>Add New Photo</p></a>
+    </div>
+
+
+<% include ./partials/scripts %>
+
+<script src="js/index.js"></script>
+
+<% include ./partials/footer %>

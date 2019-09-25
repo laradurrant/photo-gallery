@@ -1,0 +1,88 @@
+body {
+  margin: 0 auto;
+  text-align: center;
+  background-color: rgba(32, 26, 22, 0.945);
+  color: rgb(242, 199, 152);
+  font-family: 'Ubuntu', sans-serif;
+  letter-spacing: 5px;
+
+}
+
+img {
+  object-fit: contain;
+  opacity: 1;
+  border: 0px solid rgb(136, 5, 5);
+}
+
+
+
+p{
+  letter-spacing: 0px;
+}
+
+a{
+  color:rgb(248, 219, 187);
+  
+}
+
+a:hover {
+  color: rgb(231, 83, 83);
+  transition: color 1s;
+}
+
+
+.grid {
+  margin: 0 auto;
+}
+
+.grid-item {
+  float: left;
+  margin: 5px;
+}
+
+.gallery {
+  text-align: center;
+}
+
+.header{
+  margin: 5%;
+  text-transform: uppercase;
+  
+}
+
+.footer{
+  margin: 5%;
+}
+
+h3:hover{
+  color: rgb(125, 240, 255);
+  transition: color 1s;
+}
+
+
+.navbar-brand {
+  text-transform: uppercase;
+}
+
+.nav-item {
+  font-weight: 500;
+}
+
+.footer {
+  letter-spacing: 0px;
+}
+
+.footer a {
+  color: rgb(248, 219, 187);
+}
+
+.container p {
+  font-weight: 400;
+  letter-spacing: 0px;
+  margin-top: 50px;
+}
+
+#navbar {
+  background-color: rgb(248, 219, 187);
+  margin-bottom: 15px;
+}
