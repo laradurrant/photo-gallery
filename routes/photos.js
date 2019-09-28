@@ -5,7 +5,9 @@ var Photo =  require('../models/photo');
 // index route
 router.get("/", function(req, res)
 {
-
+    // For more info about finding and sorting, see: 
+    // https://thecodebarbarian.com/how-find-works-in-mongoose
+    
     Photo.find({}, function(err, photos){
         if(err){
             console.log("ERROR");

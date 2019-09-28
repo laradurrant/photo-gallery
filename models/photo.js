@@ -6,6 +6,8 @@ var photoSchema = new mongoose.Schema({
     tag: String,
     description: String,
     color: String,
+    'sort-index': Number,
+    index: Number,
     created: {type: Date, default: Date.now}
 });
 

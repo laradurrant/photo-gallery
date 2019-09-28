@@ -4,11 +4,10 @@ var express          =   require('express'),
     mongoose         =   require('mongoose'),
     app              =   express();
 
-
 var photoRoutes = require("./routes/photos"),
     indexRoutes = require("./routes/index");
 
-mongoose.connect('mongodb://localhost:27017/mom', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/mom2', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
