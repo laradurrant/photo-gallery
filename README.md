@@ -1,2 +1,5 @@
 # photo-gallery
-A website &amp; image gallery for my mom
+A website &amp; image gallery
+
+
+Built with Node, Express, MongoDB
