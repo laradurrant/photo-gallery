@@ -4,10 +4,12 @@ var express          =   require('express'),
     mongoose         =   require('mongoose'),
     app              =   express();
 
+var dotenv = require('dotenv').config()
+
 var photoRoutes = require("./routes/photos"),
     indexRoutes = require("./routes/index");
 
-mongoose.connect('mongodb://localhost:27017/mom2', {useNewUrlParser: true});
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mom2', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(express.static("public"));
@@ -22,7 +24,9 @@ app.set("view engine", "ejs");
 app.use("/", indexRoutes);
 app.use("/photos", photoRoutes);
 
-app.listen(3000, function(){
+const port = process.env.PORT || 3000;
+
+app.listen(port, function(){
     console.log("Calling app.listen's callback function.");
 });
 
