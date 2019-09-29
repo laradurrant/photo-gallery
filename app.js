@@ -2,9 +2,15 @@ var express          =   require('express'),
     bodyParser       =   require('body-parser'),
     methodOverride   =   require('method-override'),
     mongoose         =   require('mongoose'),
-    app              =   express();
+    app              =   express(),
+    parser           =   require('./pre/parser'),
+    seedDB           =   require('./pre/seeds');
 
 var dotenv = require('dotenv').config()
+
+// seed the DB
+const data = parser();
+seedDB(data);
 
 var photoRoutes = require("./routes/photos"),
     indexRoutes = require("./routes/index");
