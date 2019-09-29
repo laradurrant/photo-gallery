@@ -4,14 +4,7 @@ var Photo =  require('../models/photo');
 
 router.get("/", function(req, res)
 {
-    Photo.find({}, function(err, photos){
-        if(err){
-            console.log("ERROR");
-        }
-        else{
-            res.render("photos", {photos: photos});
-        }
-    });
+    res.redirect("photos");
 });
 
 
