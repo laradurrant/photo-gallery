@@ -1,40 +1,45 @@
 var express = require("express");
-var router  = express.Router({mergeParams: true});
-var Photo =  require('../models/photo');
+var router = express.Router({
+    mergeParams: true
+});
+var Photo = require('../models/photo');
 
 // index route
-router.get("/", function(req, res)
-{
+router.get("/", function (req, res) {
     // For more info about finding and sorting, see: 
     // https://thecodebarbarian.com/how-find-works-in-mongoose
-    
-    Photo.find({}).sort({ 'sort-index' : 1}).exec(function(err, photos){ 
-        if(err){
+
+    Photo.find({}).sort({
+        'sort-index': 1
+    }).exec(function (err, photos) {
+        if (err) {
             console.log("ERROR");
-        }
-        else{
-            res.render("photos", {photos: photos});
+        } else {
+            var devMode = req.app.locals.devMode;
+            res.render("photos", {
+                photos: photos,
+                devMode: devMode
+            });
         }
 
-     });
+    });
+
 });
 
 
 // new route
-router.get("/new", function(req, res)
-{
- 
+router.get("/new", function (req, res) {
+
     res.render("new");
 });
 
 // create route
-router.post("/", function(req, res) {
+router.post("/", function (req, res) {
 
-    Photo.create(req.body.photo, function(err, newBlog){
-        if(err){
+    Photo.create(req.body.photo, function (err, newBlog) {
+        if (err) {
             res.render("new");
-        }
-        else{
+        } else {
             res.redirect("/photos");
         }
     })
@@ -43,44 +48,43 @@ router.post("/", function(req, res) {
 
 
 // show route
-router.get("/:id", function(req, res)
-{
-    Photo.findById(req.params.id, function(err, foundPhoto){
-        if(err){
+router.get("/:id", function (req, res) {
+    Photo.findById(req.params.id, function (err, foundPhoto) {
+        if (err) {
             res.redirect("/photos");
-        }
-        else{
-            res.render("show", {photo: foundPhoto});
+        } else {
+            var devMode = req.app.locals.devMode;
+            res.render("show", {
+                photo: foundPhoto,
+                devMode: devMode
+            });
         }
     })
 });
 
 //edit route
 
-router.get("/:id/edit", function(req, res)
-{
-    Photo.findById(req.params.id, function(err, foundPhoto){
-        if(err){
+router.get("/:id/edit", function (req, res) {
+    Photo.findById(req.params.id, function (err, foundPhoto) {
+        if (err) {
             res.redirect("/photos");
-        }
-        else{
-            res.render("edit", {photo: foundPhoto});
+        } else {
+            res.render("edit", {
+                photo: foundPhoto
+            });
         }
     })
 });
 
 
 // update route
-router.put("/:id", function(req, res){
-  
+router.put("/:id", function (req, res) {
 
-    Photo.findByIdAndUpdate(req.params.id, req.body.photo, function(err, updatedPhoto){
-        if(err)
-        {
+
+    Photo.findByIdAndUpdate(req.params.id, req.body.photo, function (err, updatedPhoto) {
+        if (err) {
             res.redirect("/photos");
-        }
-        else
-        {
+        } else {
             res.redirect("/photos/" + req.params.id);
         }
     });
@@ -88,18 +92,17 @@ router.put("/:id", function(req, res){
 
 
 //  delete route
-router.delete("/:id", function(req, res) {
+router.delete("/:id", function (req, res) {
 
-        
-    Photo.findByIdAndRemove(req.params.id, function(err){
-        if(err)  {
+
+    Photo.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
             res.redirect("/photos");
-        }
-        else{
+        } else {
             res.redirect("/photos");
         }
     });
-  
+
 });
 
 

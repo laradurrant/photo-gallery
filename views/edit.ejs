@@ -4,42 +4,51 @@
 
 <h3>Edit Photo</h3>
 <div class="container">
-    <p>
-      <img src="/photos/img/<%= photo.image %>" class="image-responsive" alt="<%= photo.title %>">
-     
-      <form action="/photos/<%= photo._id %>?_method=PUT" method="POST">
-          <div class="form-group">
-            <label for="exampleFormControlInput0">Dominant Color</label>
-            <input type="color" name="photo[color]" id="html5colorpicker" value="#ff0000" style="width:100px;">
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlInput1">Photo Name</label>
-            <input type="text" name="photo[title]" class="form-control" id="exampleFormControlInput1" value="<%= photo.title %>">
-          </div>
-          <div class="form-group">
-              <label for="exampleFormControlInput1">Filename</label>
-              <input type="text" name="photo[image]" class="form-control" id="exampleFormControlInput2" value="<%= photo.image %>">
-          </div>      
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Tag Select</label>
-            <select name="photo[tag]" class="form-control" id="exampleFormControlSelect1">
-              <option <% if (photo.tag === "Bird")  { %> <%= 'selected' %>  <% } %> value="Bird"> Bird </option>
-              <option <% if (photo.tag === "Insect")  { %> <%= 'selected' %>  <% } %> value="Insect"> Insect </option>
-              <option <% if (photo.tag === "Small Mammals")  { %> <%= 'selected' %>  <% } %> value="Small Mammals"> Small Mammals </option>
-              <option <% if (photo.tag === "Large Mammals")  { %> <%= 'selected' %>  <% } %> value="Large Mammals"> Large Mammals </option>
-              <option <% if (photo.tag === "Landscape")  { %> <%= 'selected' %>  <% } %> value="Landscape"> Landscape </option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="exampleFormControlTextarea1">Photo Description</label>
-            <textarea name="photo[description]" class="form-control" id="exampleFormControlTextarea1" rows="3"><%= photo.description %></textarea>
-          </div>
-          <input class="btn btn-primary btn-lg" type="submit" value="Submit"> 
-        </form>
-    </p>
-    <a href="./"><p>Back</p></a>
+  <p>
+    <img src="/photos/img/<%= photo.image %>" class="image-responsive" alt="<%= photo.title %>">
+
+    <form action="/photos/<%= photo._id %>?_method=PUT" method="POST">
+      <div class="form-group">
+        <label for="exampleFormControlInput0">Dominant Color</label>
+        <input type="color" name="photo[color]" id="html5colorpicker" value="#ff0000" style="width:100px;">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Photo Name</label>
+        <input type="text" name="photo[title]" class="form-control" id="exampleFormControlInput1"
+          value="<%= photo.title %>">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlInput1">Filename</label>
+        <input type="text" name="photo[image]" class="form-control" id="exampleFormControlInput2"
+          value="<%= photo.image %>">
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Tag Select</label>
+        <select name="photo[tag]" class="form-control" id="exampleFormControlSelect1">
+          <option <% if (photo.tag === "Bird")  { %> <%= 'selected' %> <% } %> value="Bird"> Bird </option>
+          <option <% if (photo.tag === "Insect")  { %> <%= 'selected' %> <% } %> value="Insect"> Insect </option>
+          <option <% if (photo.tag === "Small Mammals")  { %> <%= 'selected' %> <% } %> value="Small Mammals"> Small
+            Mammals </option>
+          <option <% if (photo.tag === "Large Mammals")  { %> <%= 'selected' %> <% } %> value="Large Mammals"> Large
+            Mammals </option>
+          <option <% if (photo.tag === "Landscape")  { %> <%= 'selected' %> <% } %> value="Landscape"> Landscape
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Photo Description</label>
+        <textarea name="photo[description]" class="form-control" id="exampleFormControlTextarea1"
+          rows="3"><%= photo.description %></textarea>
+      </div>
+      <input class="btn btn-primary btn-lg" type="submit" value="Submit">
+    </form>
+  </p>
+  <a href="./">
+    <p>Back</p>
+  </a>
 </div>
 
 
 <% include ./partials/scripts %>
 <% include ./partials/footer %>
+<% include ./partials/color %>
