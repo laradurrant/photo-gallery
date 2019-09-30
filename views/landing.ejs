@@ -1,21 +1,35 @@
 <% include ./partials/header %>
 <% include ./partials/navbar %>
 
-<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+
+<div class="container">
+<h1>Fine Art Photography</h1>
+<h3>By Joan Faue-Durrant</h3>
+
+
+<!-- Should aim for images of equal size @ 1024x700 -->
+<div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-          <img src="..." class="d-block w-100" alt="...">
+          <img src="img/landing/IMG_6295_resized.jpg" class="d-block w-100 img-fluid" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="...">
+        <img src="img/landing/IMG_6314_resized.jpg" class="d-block w-100 img-fluid" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="..." class="d-block w-100" alt="...">
+        <img src="img/landing/IMG_6323_resized.jpg" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="img/landing/IMG_6332_resized.jpg" class="d-block w-100 img-fluid" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="img/landing/IMG_6334_resized.jpg" class="d-block w-100 img-fluid" alt="...">
       </div>
     </div>
   </div>
-  
-
-
+  <br>
+<a href="/photos/">
+<button class="btn btn-primary"> Explore Photos</button></a>
+</div>
 <% include ./partials/scripts %>
 <% include ./partials/footer %>

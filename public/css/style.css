@@ -72,14 +72,20 @@ h3:hover {
   margin-top: 30px;
 }
 
+.about {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+
 #navbar {
   background-color: rgb(248, 219, 187);
   margin-bottom: 15px;
 }
 
-.about {
-  padding-left: 20%;
-  padding-right: 20%;
+.carousel-item img {
+  max-height: 500px;
+  min-width: auto;
 }
 
 @media (max-width: 800px) {
