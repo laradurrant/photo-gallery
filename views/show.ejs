@@ -31,9 +31,9 @@
     </script>
 
     <!-- Share button code for Facebook -->
-    <div class="fb-share-button" data-href="<%= process.env.MONGODB_URI %>" data-layout="button"
+    <div class="fb-share-button" data-href="<%= process.env.SITE_URL %>" data-layout="button"
       data-size="small"><a target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=<%= process.env.MONGODB_URI %>;src=sdkpreparse"
+        href="https://www.facebook.com/sharer/sharer.php?u=<%= process.env.SITE_URL %>/photos/<%= photo._id %>;src=sdkpreparse"
         class="fb-xfbml-parse-ignore">Share</a></div>
 
 
