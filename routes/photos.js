@@ -12,7 +12,7 @@ router.get("/", function (req, res) {
     Photo.find({}).sort({
         'sort-index': 1
     }).exec(function (err, photos) {
-        if (err) {
+        if (err || !photos) {
             console.log("ERROR");
         } else {
             var devMode = req.app.locals.devMode;
@@ -37,7 +37,7 @@ router.get("/new", function (req, res) {
 router.post("/", function (req, res) {
 
     Photo.create(req.body.photo, function (err, newBlog) {
-        if (err) {
+        if (err || !newBlog) {
             res.render("new");
         } else {
             res.redirect("/photos");
@@ -50,7 +50,7 @@ router.post("/", function (req, res) {
 // show route
 router.get("/:id", function (req, res) {
     Photo.findById(req.params.id, function (err, foundPhoto) {
-        if (err) {
+        if (err || !foundPhoto) {
             res.redirect("/photos");
         } else {
             var devMode = req.app.locals.devMode;
@@ -66,7 +66,7 @@ router.get("/:id", function (req, res) {
 
 router.get("/:id/edit", function (req, res) {
     Photo.findById(req.params.id, function (err, foundPhoto) {
-        if (err) {
+        if (err || !foundPhoto) {
             res.redirect("/photos");
         } else {
             res.render("edit", {
@@ -82,7 +82,7 @@ router.put("/:id", function (req, res) {
 
 
     Photo.findByIdAndUpdate(req.params.id, req.body.photo, function (err, updatedPhoto) {
-        if (err) {
+        if (err || !updatedPhoto) {
             res.redirect("/photos");
         } else {
             res.redirect("/photos/" + req.params.id);

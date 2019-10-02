@@ -6,7 +6,7 @@
     <div class="header"></div>
     <div class="grid">
         <% photos.forEach(function(photo){ %>
-        <div class="grid-item">
+        <div class="grid-item img-fluid">
             <a href="/photos/<%= photo._id %>"><img width="300" src="img/<%= photo.image %>"
                     alt="<%= photo.title %>"></a>
         </div>
