@@ -86,6 +86,11 @@ h3:hover {
 .carousel-item img {
   max-height: 500px;
   min-width: auto;
+  padding: 20px;
+}
+
+#my_centered_buttons { 
+  display: flex; justify-content: center; 
 }
 
 @media (max-width: 800px) {

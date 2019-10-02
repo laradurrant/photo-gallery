@@ -18,30 +18,21 @@
     <br>
     <% } %>
 
-     <!-- Share button code for Twitter -->
-    <div>
-      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-        data-show-count="false">Tweet</a>
-      <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <!-- AddToAny BEGIN -->
+    <!-- Docs for AddToAny: https://www.addtoany.com/buttons/customize/ -->
+    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" id="my_centered_buttons">
+      <a class="a2a_dd" href="<%= process.env.SITE_URL %>"></a>
+      <a class="a2a_button_facebook"></a>
+      <a class="a2a_button_twitter"></a>
+      <a class="a2a_button_email"></a>
+      <a class="a2a_button_telegram"></a>
     </div>
-
-    <!-- Load Facebook SDK for JavaScript -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v4.0">
-    </script>
-
-    <!-- Share button code for Facebook -->
-    <div class="fb-share-button" data-href="<%= process.env.SITE_URL %>" data-layout="button"
-      data-size="small"><a target="_blank"
-        href="https://www.facebook.com/sharer/sharer.php?u=<%= process.env.SITE_URL %>photos/<%= photo._id %>;src=sdkpreparse"
-        class="fb-xfbml-parse-ignore">Share</a></div>
-
-
-
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+    <!-- AddToAny END -->
 
   </p>
   <a href="/photos">
-    <p>Back</p>
+    <button class="btn btn-primary">Back</button>
   </a>
 </div>
 
