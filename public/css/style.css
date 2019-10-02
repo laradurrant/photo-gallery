@@ -14,11 +14,11 @@ img {
 }
 
 a {
-  color: rgb(248, 219, 187);
+  color: rgb(255, 255, 255);
 }
 
 a:hover {
-  color: rgb(231, 83, 83);
+  color: hsl(221, 100%, 94%);
   transition: color 1s;
 }
 
@@ -88,6 +88,23 @@ h3:hover {
   min-width: auto;
   padding: 20px;
 }
+
+.arrow {
+  height: 3em;
+}
+
+.fas {
+  font-size: 4em;
+  opacity: 0.2;
+}
+
+
+.fas:hover {
+
+  opacity: 1;
+  transition: 1s;
+}
+
 
 #my_centered_buttons { 
   display: flex; justify-content: center; 
