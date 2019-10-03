@@ -19,6 +19,7 @@ app.use(methodOverride("_method"));
 app.locals.devMode = false;
 app.use('/', express.static(__dirname + '/public'));
 app.use('/photos/', express.static(__dirname + '/public'));
+app.use('/photos/ss/', express.static(__dirname + '/public'));
 app.use('/about/', express.static(__dirname + '/public'));
 
 app.set("view engine", "ejs");

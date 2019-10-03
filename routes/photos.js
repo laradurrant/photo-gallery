@@ -4,10 +4,12 @@ var router = express.Router({
 });
 var Photo = require('../models/photo');
 
+
 // index route
 router.get("/", function (req, res) {
     // For more info about finding and sorting, see: 
     // https://thecodebarbarian.com/how-find-works-in-mongoose
+
 
     Photo.find({}).sort({
         'sort-index': 1
@@ -26,7 +28,6 @@ router.get("/", function (req, res) {
 
 });
 
-
 // new route
 router.get("/new", function (req, res) {
 
@@ -35,6 +36,7 @@ router.get("/new", function (req, res) {
 
 // create route
 router.post("/", function (req, res) {
+   
 
     Photo.create(req.body.photo, function (err, newBlog) {
         if (err || !newBlog) {
@@ -49,6 +51,7 @@ router.post("/", function (req, res) {
 
 // show route
 router.get("/:id", function (req, res) {
+
     Photo.findById(req.params.id, function (err, foundPhoto) {
         if (err || !foundPhoto) {
             res.redirect("/photos");
@@ -63,13 +66,12 @@ router.get("/:id", function (req, res) {
 });
 
 // next & prev route
-router.get("/:command/:index", function (req, res) {
-
-
+router.get("/ss/:command/:index", function (req, res) {
     var index = parseInt(req.params.index);
 
     // If index is anyting other than a number, redirect back to the main gallery
-    if (!index || typeof (index) != 'number') {
+    if (index == undefined || typeof (index) != 'number') {
+       
         res.redirect("/photos");
     } else {
 
@@ -84,7 +86,7 @@ router.get("/:command/:index", function (req, res) {
         }
 
         // attempt to find the total number of photos in the database
-        Photo.count({}, function (err, count) {
+        Photo.countDocuments({}, function (err, count) {
 
             if (err || !count) {} else {
                 // if the count is greater than the max, reset the index counter
@@ -161,6 +163,8 @@ router.delete("/:id", function (req, res) {
     });
 
 });
+
+
 
 
 
