@@ -6,7 +6,23 @@ var router = express.Router({
 var Photo = require('../models/photo');
 
 router.get("/", function (req, res) {
-    res.render("landing");
+
+
+    Photo.find({landing: true}).sort({
+        'sort-index': 1
+    }).exec(function (err, photos) {
+        if (err || !photos) {
+            console.log("ERROR");
+        } else {
+            var devMode = req.app.locals.devMode;
+            res.render("landing", {
+                photos: photos,
+                devMode: devMode
+            });
+        }
+
+    });
+
 });
 
 
