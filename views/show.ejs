@@ -8,9 +8,9 @@
   <!-- Make this into a bootstrap responsive grid -->
 
   <div>
-    <span class="arrow arrow-left"><a href="#"><i class="fas fa-angle-left"></i></a></span>
-    <span><img src="../img/gallery/<%= photo.image %>" class="img-fluid" alt="<%= photo.title %>"></span>
-    <span class="arrow arrow-right"><a href="#"><i class="fas fa-angle-right"></i></a></span>
+    <span class="arrow arrow-left"><a href="/photos/prev/<%= photo['sort-index'] %>"><i class="fas fa-angle-left"></i></a></span>
+    <span><a href="/photos/next/<%= photo['sort-index'] %>"><img src="../img/gallery/<%= photo.image %>" class="img-fluid" alt="<%= photo.title %>"></a></span>
+    <span class="arrow arrow-right"><a href="/photos/next/<%= photo['sort-index'] %>"><i class="fas fa-angle-right"></i></a></span>
   </div>
 
   <div>
