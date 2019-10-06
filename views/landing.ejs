@@ -19,7 +19,7 @@
         <% index = 0; %>
         <% photos.forEach(function(photo){ %>
            <div class="carousel-item <% if (index == 0) { %> active <% } %>">
-              <a href="./photos/<%= photo._id %>"><img src="img/landing/t_<%= photo.image %>" class="d-block w-100" alt="<%= photo.title %>"></a>
+              <a href="./photos/"><img src="img/landing/t_<%= photo.image %>" class="d-block w-100" alt="<%= photo.title %>"></a>
             </div>
             <% index = index + 1 %>
         <% }); %>
@@ -35,32 +35,6 @@
     </a>
   </div>
 
-
-  <!-- Should aim for images of equal size @ 1024x700 -->
- <!--  <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <a href="./photos/5d8f846576dd1918b0c33da0"><img src="img/landing/IMG_6314_resized.JPG"
-            class="d-block w-100 img-fluid" alt="..."></a>
-      </div>
-      <div class="carousel-item">
-        <a href="./photos/5d8f846576dd1918b0c33db5"> <img src="img/landing/IMG_6314_resized.JPG"
-            class="d-block w-100 img-fluid" alt="..."></a>
-      </div>
-      <div class="carousel-item">
-        <a href="./photos/5d8f846576dd1918b0c33db6"><img src="img/landing/IMG_6323_resized.JPG"
-            class="d-block w-100 img-fluid" alt="..."></a>
-      </div>
-      <div class="carousel-item">
-        <a href="./photos/5d8f846576dd1918b0c33dbb"><img src="img/landing/IMG_6332_resized.JPG"
-            class="d-block w-100 img-fluid" alt="..."></a>
-      </div>
-      <div class="carousel-item">
-        <a href="./photos/5d8f846576dd1918b0c33dbc"><img src="img/landing/IMG_6334_resized.JPG"
-            class="d-block w-100 img-fluid" alt="..."></a>
-      </div>
-    </div>
-  </div> -->
   <br>
   <a href="/photos/">
     <button class="btn btn-primary"> Explore Photos</button></a>
