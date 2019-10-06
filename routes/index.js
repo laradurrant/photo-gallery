@@ -2,17 +2,21 @@ var express = require("express");
 var router = express.Router({
     mergeParams: true
 });
-var nodemailer = require("nodemailer");
+const mailgun = require("mailgun-js");
 var bodyParser = require("body-parser");
 
 var Photo = require('../models/photo');
 
-router.use(bodyParser.urlencoded({extended: true}))
+router.use(bodyParser.urlencoded({
+    extended: true
+}))
 
 router.get("/", function (req, res) {
 
 
-    Photo.find({landing: true}).sort({
+    Photo.find({
+        landing: true
+    }).sort({
         'sort-index': 1
     }).exec(function (err, photos) {
         if (err || !photos) {
@@ -46,35 +50,29 @@ router.get("/contact", function (req, res) {
 // POST route from contact form
 router.post('/contact', (req, res) => {
 
-    // Check out https://www.mailgun.com/ for a non-GMAIL e-mail
-    const transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
-        auth: {
-            user: 'ressie.dibbert@ethereal.email',
-            pass: 'F3kJcqr2gjmJRpW7B5'
+    const mg = mailgun({
+        apiKey: process.env.MG_API,
+        domain: process.env.SITE_URL_DOMAIN
+    });
+
+    const data = {
+        from: req.body.email,
+        to: 'lara.durrant@gmail.com',
+        subject: `New contact from ${req.body.name} on Mom\'s site`,
+        text: 'New contact from ' + req.body.name + " (" + req.body.email + " ): " + req.body.message
+    };
+
+
+    mg.messages().send(data, function (error, body) {
+        if (error || !body) {
+            res.render('contact-failure') // Show a page indicating failure
+
+        } else {
+            res.render('contact-success') // Show a page indicating success
         }
     });
-  
-    // Specify what the email will look like
-    const mailOpts = {
-      from: req.body.email, // This is ignored by Gmail
-      to: 'ressie.dibbert@ethereal.email',
-      subject: `New contact from ${req.body.name} on Mom\'s site`,
-      text: req.body.message
-    }
-  
-    // Attempt to send the email
-    transporter.sendMail(mailOpts, (error, response) => {
-      if (error) {
-        res.render('contact-failure') // Show a page indicating failure
-      }
-      else {
-        console.log(response);
-        res.render('contact-success') // Show a page indicating success
-      }
-    })
-  })
+
+})
 
 
 module.exports = router;
