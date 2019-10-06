@@ -57,7 +57,7 @@ router.post('/contact', (req, res) => {
 
     const data = {
         from: req.body.email,
-        to: 'lara.durrant@gmail.com',
+        to: process.env.EMAIL1 + ', ' + process.env.EMAIL2,
         subject: `New contact from ${req.body.name} on Mom\'s site`,
         text: 'New contact from ' + req.body.name + " (" + req.body.email + " ): " + req.body.message
     };
