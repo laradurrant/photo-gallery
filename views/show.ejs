@@ -5,8 +5,6 @@
 
   <h3><%= photo.title %></h3>
 
-  <!-- Make this into a bootstrap responsive grid -->
-
   <div class="container">
     <div class="row justify-content-md-center align-items-center">
       <div class="col-2 d-none d-md-block">
@@ -20,12 +18,6 @@
       </div>
     </div>
 
-<!--   <div>
-    <span class="arrow arrow-left"><a href="/photos/prev/<%= photo['sort-index'] %>"><i class="fas fa-angle-left"></i></a></span>
-    <span><a href="/photos/next/<%= photo['sort-index'] %>"><img src="../img/gallery/<%= photo.image %>" class="img-fluid" alt="<%= photo.title %>"></a></span>
-    <span class="arrow arrow-right"><a href="/photos/next/<%= photo['sort-index'] %>"><i class="fas fa-angle-right"></i></a></span>
-  </div>
- -->
   <div>
     <p><%= photo.description %></p>
   </div>

@@ -83,6 +83,10 @@ h3:hover {
   margin-bottom: 15px;
 }
 
+.carousel-indicators li {
+  background-color: #2c2622;
+}
+
 .carousel-item img {
   max-height: 500px;
   min-width: auto;
