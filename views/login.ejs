@@ -1,0 +1,15 @@
+<% include ./partials/header %>
+<% include ./partials/navbar %>
+
+<h1>Login</h1>
+<div class="container">
+        <p>Use the form below to login with your username & password! To create one, go to the <a href="/register">register</a> a page.</p>
+    <form action="/login" method="POST">
+        <input class="form-control" type="text" name="username" placeholder="username"><br>
+        <input class="form-control" type="password" name="password" placeholder="password"><br><br>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
+</div>
+
+<% include ./partials/scripts %>
+<% include ./partials/footer %>

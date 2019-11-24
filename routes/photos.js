@@ -10,7 +10,7 @@ router.get("/", function (req, res) {
     // For more info about finding and sorting, see: 
     // https://thecodebarbarian.com/how-find-works-in-mongoose
 
-
+ 
     Photo.find({}).sort({
         'sort-index': 1
     }).exec(function (err, photos) {
@@ -29,7 +29,7 @@ router.get("/", function (req, res) {
 });
 
 // new route
-router.get("/new", function (req, res) {
+router.get("/new", isLoggedIn, function (req, res) {
 
     res.render("new");
 });
@@ -67,6 +67,8 @@ router.get("/:id", function (req, res) {
 
 // next & prev route
 router.get("/ss/:command/:index", function (req, res) {
+    
+    
     var index = parseInt(req.params.index);
 
     // If index is anyting other than a number, redirect back to the main gallery
@@ -123,11 +125,14 @@ router.get("/ss/:command/:index", function (req, res) {
 
 //edit route
 
-router.get("/:id/edit", function (req, res) {
+router.get("/:id/edit", isLoggedIn, function (req, res) {
+    console.log("edit route")
     Photo.findById(req.params.id, function (err, foundPhoto) {
         if (err || !foundPhoto) {
+
             res.redirect("/photos");
         } else {
+          
             res.render("edit", {
                 photo: foundPhoto
             });
@@ -137,9 +142,8 @@ router.get("/:id/edit", function (req, res) {
 
 
 // update route
-router.put("/:id", function (req, res) {
-
-
+router.put("/:id", isLoggedIn, function (req, res) {
+    console.log("update route")
     Photo.findByIdAndUpdate(req.params.id, req.body.photo, function (err, updatedPhoto) {
         if (err || !updatedPhoto) {
             res.redirect("/photos");
@@ -151,8 +155,8 @@ router.put("/:id", function (req, res) {
 
 
 //  delete route
-router.delete("/:id", function (req, res) {
-
+router.delete("/:id", isLoggedIn, function (req, res) {
+    console.log("delete route")
 
     Photo.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
@@ -164,7 +168,12 @@ router.delete("/:id", function (req, res) {
 
 });
 
-
+function isLoggedIn(req, res, next){
+    if(req.isAuthenticated()){
+        return next();
+    }
+    res.redirect("/photos");
+}
 
 
 

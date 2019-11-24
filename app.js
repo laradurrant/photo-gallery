@@ -2,9 +2,13 @@ var express          =   require('express'),
     bodyParser       =   require('body-parser'),
     methodOverride   =   require('method-override'),
     mongoose         =   require('mongoose'),
+    passport         =   require('passport'),
+    LocalStrategy    =   require('passport-local'),
+    User             =   require('./models/user'),
     app              =   express();
 
 var dotenv = require('dotenv').config()
+const port = process.env.PORT || 3000;
 
 
 var photoRoutes = require("./routes/photos"),
@@ -12,6 +16,22 @@ var photoRoutes = require("./routes/photos"),
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mom2', {useNewUrlParser: true});
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+// Passport Configuration
+app.use(require("express-session")({
+    secret: "Baby cakes is the best cat ever",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+// end passport configuration
 
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
@@ -27,7 +47,47 @@ app.set("view engine", "ejs");
 app.use("/", indexRoutes);
 app.use("/photos", photoRoutes);
 
-const port = process.env.PORT || 3000;
+
+// Auth routes
+
+// show register form
+app.get("/register", function(req, res){
+    res.render("register");
+})
+
+app.post("/register", function(req, res){
+    var newUser = new User({username: req.body.username});
+    User.register(newUser, req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function(){
+            res.redirect("/photos");
+        })
+    });
+});
+
+app.get("/login", function(req, res){
+    res.render("login");
+})
+
+app.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/photos", 
+        failureRedirect: "/login"
+    }), 
+    function(req, res){
+    res.send("login logic happens here");
+})
+
+// end auth routes
+app.get("/logout", function(req, res){
+    req.logout();
+    res.redirect("/photos");
+})
+
+
 
 app.listen(port, function(){
     console.log("Calling app.listen's callback function.");
