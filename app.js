@@ -36,7 +36,13 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
     
-app.locals.devMode = false;
+//app.locals.devMode = false;
+
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    next();
+})
+
 app.use('/', express.static(__dirname + '/public'));
 app.use('/photos/', express.static(__dirname + '/public'));
 app.use('/photos/ss/', express.static(__dirname + '/public'));
@@ -86,7 +92,6 @@ app.get("/logout", function(req, res){
     req.logout();
     res.redirect("/photos");
 })
-
 
 
 app.listen(port, function(){

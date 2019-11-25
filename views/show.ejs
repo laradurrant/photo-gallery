@@ -23,7 +23,7 @@
   </div>
 
   <p>
-  <% if(devMode) { %>
+  <% if(currentUser) { %>
   <a href="/photos/<%= photo._id %>/edit">
       <button class="btn btn-primary">Edit Photo</button>
     </a>

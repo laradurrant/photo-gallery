@@ -17,10 +17,10 @@ router.get("/", function (req, res) {
         if (err || !photos) {
             console.log("ERROR");
         } else {
-            var devMode = req.app.locals.devMode;
+        
             res.render("photos", {
-                photos: photos,
-                devMode: devMode
+                photos: photos
+             
             });
         }
 
@@ -56,10 +56,10 @@ router.get("/:id", function (req, res) {
         if (err || !foundPhoto) {
             res.redirect("/photos");
         } else {
-            var devMode = req.app.locals.devMode;
+        
             res.render("show", {
-                photo: foundPhoto,
-                devMode: devMode
+                photo: foundPhoto
+            
             });
         }
     })
@@ -105,10 +105,10 @@ router.get("/ss/:command/:index", function (req, res) {
                     if (err || !foundPhoto) {
                         res.redirect("/photos");
                     } else {
-                        var devMode = req.app.locals.devMode;
+                     
                         res.render("show", {
-                            photo: foundPhoto[0],
-                            devMode: devMode
+                            photo: foundPhoto[0]
+                          
                         })
                     }
                 })
