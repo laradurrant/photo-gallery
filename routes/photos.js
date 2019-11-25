@@ -3,7 +3,7 @@ var router = express.Router({
     mergeParams: true
 });
 var Photo = require('../models/photo');
-
+const fs = require('fs')
 
 // index route
 router.get("/", function (req, res) {
@@ -48,6 +48,45 @@ router.post("/", function (req, res) {
 
 });
 
+
+router.get("/upload", function(req, res){
+    res.render("upload");
+})
+
+router.post("/upload", function(req, res){
+
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+      }
+    
+      // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+      let sampleFile = req.files.sampleFile;
+
+      var name = sampleFile.name.toUpperCase(sampleFile.name);
+      var filepath = 'public/img/gallery/IMG_' + name;
+
+      console.log(filepath);
+
+      try {
+        if (fs.existsSync(filepath)) {
+          //file exists
+          res.send('File already exists!');
+        }
+        else{
+            // Use the mv() method to place the file somewhere on your server
+            sampleFile.mv(filepath, function(err) {
+            if (err)
+                return res.status(500).send(err);
+            
+                res.send('File uploaded!');
+            });
+            }
+      } catch(err) {
+        console.error(err)
+      }
+
+
+})
 
 // show route
 router.get("/:id", function (req, res) {
@@ -167,6 +206,7 @@ router.delete("/:id", isLoggedIn, function (req, res) {
     });
 
 });
+
 
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){

@@ -5,6 +5,7 @@ var express          =   require('express'),
     passport         =   require('passport'),
     LocalStrategy    =   require('passport-local'),
     User             =   require('./models/user'),
+    fileUpload       =   require('express-fileupload'),
     app              =   express();
 
 var dotenv = require('dotenv').config()
@@ -25,6 +26,11 @@ app.use(require("express-session")({
     saveUninitialized: false
 }));
 
+// set up file upload
+app.use(fileUpload());
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -36,7 +42,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.static("public"));
 app.use(methodOverride("_method"));
     
-//app.locals.devMode = false;
+app.locals.devMode = false;
 
 app.use(function(req, res, next){
     res.locals.currentUser = req.user;
