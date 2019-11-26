@@ -2,25 +2,29 @@ var express = require("express");
 var router = express.Router({
     mergeParams: true
 });
+
 var Photo = require('../models/photo');
 const fs = require('fs')
+
+
+
 
 // index route
 router.get("/", function (req, res) {
     // For more info about finding and sorting, see: 
     // https://thecodebarbarian.com/how-find-works-in-mongoose
 
- 
+
     Photo.find({}).sort({
         'sort-index': 1
     }).exec(function (err, photos) {
         if (err || !photos) {
             console.log("ERROR");
         } else {
-        
+
             res.render("photos", {
                 photos: photos
-             
+
             });
         }
 
@@ -35,20 +39,89 @@ router.get("/new", isLoggedIn, function (req, res) {
 });
 
 // create route
-router.post("/", function (req, res) {
-   
+router.post("/new", isLoggedIn, function (req, res) {
 
-    Photo.create(req.body.photo, function (err, newBlog) {
-        if (err || !newBlog) {
-            res.render("new");
+
+
+    // TODO: Refactor this code into a function
+    Photo.countDocuments({}, function (err, count) {
+
+    
+        if (err || !count) {
+            res.send("Oops... I had a problem contacting the database.");
         } else {
-            res.redirect("/photos");
+
+            // gets the total count of the photos for the sort-index
+            // TODO: Instead of getting the count, let's instead sort by sort-index, get the highest index, and then set this new index to be that number
+
+            req.body['photo[sort-index]'] = count;
+
+            // uploads the file
+            if (!req.files || Object.keys(req.files).length === 0) {
+                return res.status(400).send('No files were uploaded.');
+            }
+
+            // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+            let sampleFile = req.files.sampleFile;
+            var name = sampleFile.name.toUpperCase(sampleFile.name);
+            req.body['photo[image]'] = name;
+            var filepath = 'public/img/gallery/' + name;
+            var t_filepath = 'public/img/thumbs/t_' + name;
+            console.log(filepath);
+
+            try {
+                if (fs.existsSync(filepath)) {
+                    //file exists
+                    res.send('Oops... File already exists!');
+                } else {
+                    // Use the mv() method to place the file somewhere on your server
+                    sampleFile.mv(filepath, function (err) {
+                        if (err)
+                            return res.status(500).send(err);
+
+                        // TODO: Create an actual thumbnail here instead of just copy the original
+                        sampleFile.mv(t_filepath, function (err) {
+                            if (err)
+                                return res.status(500).send(err);
+
+                            var photoObject = {
+                                'sort-index': count,
+                                title: req.body['photo[title]'],
+                                tag: req.body['photo[tag]'],
+                                description: req.body['photo[description]'],
+                                color: req.body['photo[color]'],
+                                image: name
+                            };
+
+                            console.log(photoObject);
+
+                            Photo.create(photoObject, function (err, newBlog) {
+                                if (err || !newBlog) {
+                                    res.render("new");
+                                } else {
+                                    res.redirect("/photos");
+                                }
+                            })
+
+                        });
+
+                    });
+
+                }
+            } catch (err) {
+                console.error(err)
+            }
+
+
+
         }
     })
 
 });
 
 
+
+/*
 router.get("/upload", function(req, res){
     res.render("upload");
 })
@@ -87,6 +160,8 @@ router.post("/upload", function(req, res){
 
 
 })
+*/
+
 
 // show route
 router.get("/:id", function (req, res) {
@@ -95,10 +170,10 @@ router.get("/:id", function (req, res) {
         if (err || !foundPhoto) {
             res.redirect("/photos");
         } else {
-        
+
             res.render("show", {
                 photo: foundPhoto
-            
+
             });
         }
     })
@@ -106,13 +181,13 @@ router.get("/:id", function (req, res) {
 
 // next & prev route
 router.get("/ss/:command/:index", function (req, res) {
-    
-    
+
+
     var index = parseInt(req.params.index);
 
     // If index is anyting other than a number, redirect back to the main gallery
     if (index == undefined || typeof (index) != 'number') {
-       
+
         res.redirect("/photos");
     } else {
 
@@ -144,10 +219,10 @@ router.get("/ss/:command/:index", function (req, res) {
                     if (err || !foundPhoto) {
                         res.redirect("/photos");
                     } else {
-                     
+
                         res.render("show", {
                             photo: foundPhoto[0]
-                          
+
                         })
                     }
                 })
@@ -164,6 +239,9 @@ router.get("/ss/:command/:index", function (req, res) {
 
 //edit route
 
+// TODO: Add functionality for editing the photo
+
+
 router.get("/:id/edit", isLoggedIn, function (req, res) {
     console.log("edit route")
     Photo.findById(req.params.id, function (err, foundPhoto) {
@@ -171,7 +249,7 @@ router.get("/:id/edit", isLoggedIn, function (req, res) {
 
             res.redirect("/photos");
         } else {
-          
+
             res.render("edit", {
                 photo: foundPhoto
             });
@@ -208,8 +286,8 @@ router.delete("/:id", isLoggedIn, function (req, res) {
 });
 
 
-function isLoggedIn(req, res, next){
-    if(req.isAuthenticated()){
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
         return next();
     }
     res.redirect("/photos");
