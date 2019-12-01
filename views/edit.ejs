@@ -7,7 +7,12 @@
   <p>
     <img src="../../img/gallery/<%= photo.image %>" class="image-responsive" alt="<%= photo.title %>">
 
-    <form action="/photos/<%= photo._id %>?_method=PUT" method="POST">
+    <form action="/photos/<%= photo._id %>?_method=PUT" method="POST" ref="uploadForm" id="uploadForm" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="exampleFormControlInput2"><b>Filename</b></label><br>
+        <input type="file" name="sampleFile" id="exampleFormControlInput2" />
+      </div>
+      
       <div class="form-group">
         <label for="exampleFormControlInput0">Dominant Color</label>
         <input type="color" name="photo[color]" id="html5colorpicker" value="<%= photo.color %>" style="width:100px;">
