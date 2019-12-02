@@ -140,7 +140,7 @@ router.get("/:id/edit", isLoggedIn, function (req, res) {
 
 
 // update route
-router.put("/:id", isLoggedIn, function (req, res) {
+router.put("/:id", function (req, res) {
     console.log("update route")
 
     // maybe we can have two "paths" with two different photoObjects
@@ -150,6 +150,7 @@ router.put("/:id", isLoggedIn, function (req, res) {
 
     // uploads the file
     if (!req.files || Object.keys(req.files).length === 0) {
+        console.log("no photo uploaded, proceeding to path 1")
 
         // update, no uploads
         var photoObject = {
@@ -171,17 +172,14 @@ router.put("/:id", isLoggedIn, function (req, res) {
         });
 
     } else {
+
+        console.log("photo uploaded, proceeding to path 2")
         // if the photo is updated, then we need to have all of the file uploading procedures
         // we need to make sure that we save the image to the same place and location as the other one (overwrite)
 
         // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
         let sampleFile = req.files.sampleFile;
 
-        var filename = sampleFile.name.toUpperCase(sampleFile.name);
-        var filepath = 'public/img/gallery/' + filename;
-        var t_filepath = 'public/img/thumbs/t_' + filename;
-
-        req.body['photo[image]'] = sampleFile.name.toUpperCase(sampleFile.name);
 
         // the object we will pass to the database
         var photoObject = {
@@ -189,8 +187,12 @@ router.put("/:id", isLoggedIn, function (req, res) {
             tag: req.body['photo[tag]'],
             description: req.body['photo[description]'],
             color: req.body['photo[color]'],
-            image: filename
+            image: req.body['photo[image]']
         };
+
+        var filename = req.body['photo[image]'];
+        var filepath = 'public/img/gallery/' + filename;
+        var t_filepath = 'public/img/thumbs/t_' + filename;
 
 
         try {
@@ -198,6 +200,8 @@ router.put("/:id", isLoggedIn, function (req, res) {
                 // we want to make sure the file exists this time
 
                 // Use the mv() method to place the file somewhere on the server
+
+
                 sampleFile.mv(filepath, function (err) {
                     if (err)
                         return res.status(500).send(err);
@@ -234,10 +238,32 @@ router.put("/:id", isLoggedIn, function (req, res) {
 router.delete("/:id", isLoggedIn, function (req, res) {
     console.log("delete route")
 
+    console.log(req.body.photo.image)
+
+    filename = req.body.photo.image
+
+    var filepath = 'public/img/gallery/' + filename;
+    var t_filepath = 'public/img/thumbs/t_' + filename;
+
+
+    fs.unlink(filepath, function (err) {
+        if (err) {
+            console.log("Couldn't delete the image file")
+        }
+    })
+
+    fs.unlink(t_filepath, function (err) {
+        if (err) {
+            console.log("Couldn't delete the thumbnail image")
+        }
+    })
+
+
     Photo.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             res.redirect("/photos");
         } else {
+
             res.redirect("/photos");
         }
     });

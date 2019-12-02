@@ -19,6 +19,7 @@
       <button class="btn btn-primary">Edit Photo</button>
     </a>
     <form id="deleteForm" action="/photos/<%= photo._id %>?_method=DELETE" method="POST">
+      <input name="photo[image]" value ="<%= photo.image %>" hidden></input>
       <button type="submit" class="btn btn-danger">Delete Photo</button>
     </form>
     <br>

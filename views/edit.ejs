@@ -10,7 +10,7 @@
     <form action="/photos/<%= photo._id %>?_method=PUT" method="POST" ref="uploadForm" id="uploadForm" enctype="multipart/form-data">
       <div class="form-group">
         <label for="exampleFormControlInput2"><b>Filename</b></label><br>
-        <input type="file" name="sampleFile" id="exampleFormControlInput2" />
+        <input type="file" name="sampleFile" id="exampleFormControlInput2"   />
       </div>
       
       <div class="form-group">
@@ -22,11 +22,12 @@
         <input type="text" name="photo[title]" class="form-control" id="exampleFormControlInput1"
           value="<%= photo.title %>">
       </div>
+    
       <div class="form-group">
-        <label for="exampleFormControlInput1">Filename</label>
-        <input type="text" name="photo[image]" class="form-control" id="exampleFormControlInput2"
-          value="<%= photo.image %>">
+     
+        <input type="text" name="photo[image]" class="form-control" id="form-control" value="<%= photo.image %>"  hidden>
       </div>
+
       <div class="form-group">
         <label for="exampleFormControlSelect1">Tag Select</label>
         <select name="photo[tag]" class="form-control" id="exampleFormControlSelect1">

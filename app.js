@@ -16,6 +16,8 @@ var photoRoutes = require("./routes/photos"),
     indexRoutes = require("./routes/index");
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mom2', {useNewUrlParser: true});
+mongoose.set('useFindAndModify', false);
+
 app.use(bodyParser.urlencoded({extended: true}));
 
 
