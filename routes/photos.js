@@ -7,8 +7,6 @@ var Photo = require('../models/photo');
 const fs = require('fs')
 
 
-
-
 // index route
 router.get("/", function (req, res) {
     // For more info about finding and sorting, see: 
@@ -46,6 +44,10 @@ router.post("/new", isLoggedIn, function (req, res) {
         return res.status(400).send('No files were uploaded.');
     }
 
+    // TODO: Also check the MIME type and make sure we didn't get passed anything weird or strange
+    // aka JPG/JPEG or PNG only
+
+
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.sampleFile;
 
@@ -75,6 +77,10 @@ router.post("/new", isLoggedIn, function (req, res) {
                     return res.status(500).send(err);
 
                 // TODO: Create an actual thumbnail here instead of just copy the original
+
+                // see https://www.npmjs.com/package/image-thumbnail  for details on how to create a thumbnail
+                // note that we can set the width, and we might need to set the height to be the same ratio with some simple math
+
                 sampleFile.mv(t_filepath, function (err) {
                     if (err)
                         return res.status(500).send(err);
@@ -140,13 +146,11 @@ router.get("/:id/edit", isLoggedIn, function (req, res) {
 
 
 // update route
-router.put("/:id", function (req, res) {
+router.put("/:id", isLoggedIn, function (req, res) {
     console.log("update route")
 
-    // maybe we can have two "paths" with two different photoObjects
+    // maybe we can have two "paths" with two different photoObjects?
     // one is for if we want to have the photo updated
-
-
 
     // uploads the file
     if (!req.files || Object.keys(req.files).length === 0) {
@@ -228,8 +232,6 @@ router.put("/:id", function (req, res) {
             console.error(err)
         }
 
-
-
     }
 });
 
@@ -257,7 +259,6 @@ router.delete("/:id", isLoggedIn, function (req, res) {
             console.log("Couldn't delete the thumbnail image")
         }
     })
-
 
     Photo.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
