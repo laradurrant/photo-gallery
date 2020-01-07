@@ -78,8 +78,11 @@ router.post('/contact', (req, res) => {
             }
         });
     }
+    else{
+        res.render('contact-failure') // Show a page indicating failure
+    }
 
-
+ 
 
 })
 
