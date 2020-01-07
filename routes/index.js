@@ -50,27 +50,36 @@ router.get("/contact", function (req, res) {
 // POST route from contact form
 router.post('/contact', (req, res) => {
 
-    const mg = mailgun({
-        apiKey: process.env.MG_API,
-        domain: process.env.SITE_URL_DOMAIN
-    });
+    console.log(req.body.question);
 
-    const data = {
-        from: req.body.email,
-        to: process.env.EMAIL1 + ', ' + process.env.EMAIL2,
-        subject: `New contact from ${req.body.name} on Mom\'s site`,
-        text: 'New contact from ' + req.body.name + " (" + req.body.email + " ): " + req.body.message
-    };
+    // if the answer is correct, only then should we submit the form
+    if(req.body.question === "10")
+    {
+    
+        const mg = mailgun({
+            apiKey: process.env.MG_API,
+            domain: process.env.SITE_URL_DOMAIN
+        });
+    
+        const data = {
+            from: req.body.email,
+            to: process.env.EMAIL1 + ', ' + process.env.EMAIL2,
+            subject: `New contact from ${req.body.name} on Mom\'s site`,
+            text: 'New contact from ' + req.body.name + " (" + req.body.email + " ): " + req.body.message
+        };
+    
+    
+        mg.messages().send(data, function (error, body) {
+            if (error || !body) {
+                res.render('contact-failure') // Show a page indicating failure
+    
+            } else {
+                res.render('contact-success') // Show a page indicating success
+            }
+        });
+    }
 
 
-    mg.messages().send(data, function (error, body) {
-        if (error || !body) {
-            res.render('contact-failure') // Show a page indicating failure
-
-        } else {
-            res.render('contact-success') // Show a page indicating success
-        }
-    });
 
 })
 
