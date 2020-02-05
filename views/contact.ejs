@@ -1,5 +1,6 @@
 <% include ./partials/header %>
 <% include ./partials/navbar %>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 <div class="container">
 
@@ -18,10 +19,7 @@
       <label for="message">Message</label>
       <textarea class="form-control" id="message" name="message" rows="3"></textarea>
     </div>
-    <div class="form-group">
-      <label for="question">5 + 5 = ?</label>
-      <input type="text" class="form-control" id="question" name="question" placeholder="Your Answer Here" required>
-    </div>
+    <div class="g-recaptcha" style="display: inline-block;" data-sitekey="<%= captchaAPI %>"></div><br>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form> <br><br>
   <div>

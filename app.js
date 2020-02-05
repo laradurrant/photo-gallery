@@ -10,6 +10,7 @@ var express          =   require('express'),
 
 var dotenv = require('dotenv').config()
 const port = process.env.PORT || 3000;
+app.locals.captcha_API = process.env.RECAPTCHA_API;
 
 
 var photoRoutes = require("./routes/photos"),

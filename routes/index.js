@@ -40,7 +40,9 @@ router.get("/about", function (req, res) {
 
 
 router.get("/contact", function (req, res) {
-    res.render("contact");
+    res.render("contact", {
+        captchaAPI: req.app.locals.captcha_API,
+    });
 });
 
 
@@ -50,12 +52,7 @@ router.get("/contact", function (req, res) {
 // POST route from contact form
 router.post('/contact', (req, res) => {
 
-    console.log(req.body.question);
-
-    // if the answer is correct, only then should we submit the form
-    if(req.body.question === "10")
-    {
-    
+  
         const mg = mailgun({
             apiKey: process.env.MG_API,
             domain: process.env.SITE_URL_DOMAIN
@@ -77,10 +74,7 @@ router.post('/contact', (req, res) => {
                 res.render('contact-success') // Show a page indicating success
             }
         });
-    }
-    else{
-        res.render('contact-failure') // Show a page indicating failure
-    }
+
 
  
 
