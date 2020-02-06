@@ -53,6 +53,10 @@ router.get("/contact", function (req, res) {
 router.post('/contact', (req, res) => {
 
   
+    if(req.body.g-recaptcha-response['success'] === true)
+    {
+
+   
         const mg = mailgun({
             apiKey: process.env.MG_API,
             domain: process.env.SITE_URL_DOMAIN
@@ -76,7 +80,10 @@ router.post('/contact', (req, res) => {
         });
 
 
- 
+    }
+    else{
+        res.render('contact-failure') // Show a page indicating failure
+    }
 
 })
 
