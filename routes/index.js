@@ -52,10 +52,26 @@ router.get("/contact", function (req, res) {
 // POST route from contact form
 router.post('/contact', (req, res) => {
 
-  
-    //console.log(req.body.g-recaptcha-response);
- 
 
+    // see https://appdividend.com/2017/08/12/google-recaptcha-node-js-tutorial-scratch/ for more info about Google Recaptcha
+  
+    if(req.body['g-recaptcha-response'] === undefined || req.body['g-recaptcha-response'] === '' || req.body['g-recaptcha-response'] === null)
+    {
+      return res.json({"responseError" : "Please select captcha first"});
+    }
+
+
+    const secretKey = process.env.RECAPTCHA_SECRET;
+  
+    const verificationURL = "https://www.google.com/recaptcha/api/siteverify?secret=" + secretKey + "&response=" + req.body['g-recaptcha-response'] + "&remoteip=" + req.connection.remoteAddress;
+  
+    request(verificationURL,function(error,response,body) {
+      body = JSON.parse(body);
+  
+      if(body.success !== undefined && !body.success) {
+        return res.json({"responseError" : "Failed captcha verification"});
+      }
+   
    
         const mg = mailgun({
             apiKey: process.env.MG_API,
@@ -79,6 +95,7 @@ router.post('/contact', (req, res) => {
             }
         });
 
+    });
 
     
 })
