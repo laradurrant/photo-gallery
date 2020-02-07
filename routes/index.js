@@ -53,8 +53,8 @@ router.get("/contact", function (req, res) {
 router.post('/contact', (req, res) => {
 
   
-    if(req.body.g-recaptcha-response['success'] === true)
-    {
+    console.log(req.body.g-recaptcha-response);
+ 
 
    
         const mg = mailgun({
@@ -80,11 +80,7 @@ router.post('/contact', (req, res) => {
         });
 
 
-    }
-    else{
-        res.render('contact-failure') // Show a page indicating failure
-    }
-
+    
 })
 
 
