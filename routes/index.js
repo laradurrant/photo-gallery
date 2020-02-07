@@ -53,7 +53,7 @@ router.get("/contact", function (req, res) {
 router.post('/contact', (req, res) => {
 
   
-    console.log(req.body.g-recaptcha-response);
+    //console.log(req.body.g-recaptcha-response);
  
 
    
