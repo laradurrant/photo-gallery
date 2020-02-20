@@ -14,7 +14,7 @@ router.get("/", function (req, res) {
 
 
     Photo.find({}).sort({
-
+            tag: 1
     }).exec(function (err, photos) {
         if (err || !photos) {
             console.log("ERROR");
